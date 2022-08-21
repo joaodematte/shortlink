@@ -13,7 +13,7 @@ const Home: NextPage = () => {
   const slugMutation = trpc.useMutation(['slug.create'], {
     onSuccess: (data) => {
       setUrlInput('');
-      setAlert({ type: 'success', message: `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/${data.slug}` });
+      setAlert({ type: 'success', message: `https://${process.env.NEXT_PUBLIC_APP_URL}/${data.slug}` });
     },
     onError: () => {
       setAlert({ type: 'error', message: 'there was an error processing your request, please try again!' });
