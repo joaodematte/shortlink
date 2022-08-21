@@ -19,6 +19,7 @@
     "prisma": "^4.2.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-hook-form": "^7.34.2",
     "react-query": "3",
     "superjson": "^1.9.1",
     "zod": "^3.18.0"

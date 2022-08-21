@@ -1,18 +1,30 @@
+import clsx from 'clsx';
 import { NextPage } from 'next';
 import Head from 'next/head';
-import React, { ChangeEvent, useState } from 'react';
+import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import Alert from '../components/Alert';
 import Button from '../components/Button';
-import Input from '../components/Input';
 import trpc from '../utils/trpc';
 
+type Form = {
+  url: string;
+};
+
+const urlRegex = /[(http(s)?)://(www.)?a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/;
+
 const Home: NextPage = () => {
-  const [urlInput, setUrlInput] = useState<string>('');
+  const {
+    register,
+    reset,
+    formState: { errors },
+    handleSubmit,
+  } = useForm<Form>();
   const [alert, setAlert] = useState<{ type: 'error' | 'success'; message: string } | null>(null);
 
   const slugMutation = trpc.useMutation(['slug.create'], {
     onSuccess: (data) => {
-      setUrlInput('');
+      reset();
       setAlert({ type: 'success', message: `https://${process.env.NEXT_PUBLIC_APP_URL}/${data.slug}` });
     },
     onError: () => {
@@ -20,10 +32,8 @@ const Home: NextPage = () => {
     },
   });
 
-  const handleSubmit = (event: React.SyntheticEvent) => {
-    event.preventDefault();
-
-    slugMutation.mutate({ url: urlInput });
+  const onSubmit = (data: Form) => {
+    slugMutation.mutate({ url: data.url });
   };
 
   return (
@@ -35,24 +45,28 @@ const Home: NextPage = () => {
         <div className="w-full max-w-xl flex flex-col gap-2">
           <div className="block text-center">
             <h1 className="font-bold text-3xl">shortlink</h1>
-            <p>input your URL below and click generate</p>
+            <p>
+              provide a <b>*valid*</b> URL and click generate
+            </p>
           </div>
           <form
             className="mt-2 flex flex-col md:flex-row items-center gap-2"
             autoComplete="off"
-            onSubmit={handleSubmit}
+            onSubmit={handleSubmit(onSubmit)}
           >
-            <Input
+            <input
+              className={clsx(
+                'p-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#4433ff] mt-1 block w-full text-sm border border-gray-300 rounded-md',
+                errors.url && 'ring-2 ring-offset-2 ring-red-600',
+              )}
               id="url"
               placeholder="https://twitter.com/joaodematte"
-              onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                setUrlInput(event.target.value);
-              }}
-              // i don't know why but the input value is getting a TypeError but that's life
-              // @ts-expect-error
-              value={urlInput}
+              {...register('url', {
+                required: true,
+                pattern: urlRegex,
+              })}
             />
-            <Button disabled={urlInput === '' || slugMutation.isLoading} loading={slugMutation.isLoading}>
+            <Button disabled={slugMutation.isLoading} loading={slugMutation.isLoading}>
               generate
             </Button>
           </form>
