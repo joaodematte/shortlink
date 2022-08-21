@@ -4,7 +4,6 @@ import React, { ChangeEvent, useState } from 'react';
 import Alert from '../components/Alert';
 import Button from '../components/Button';
 import Input from '../components/Input';
-import getBaseUrl from '../utils/getBaseUrl';
 import trpc from '../utils/trpc';
 
 const Home: NextPage = () => {
@@ -14,7 +13,7 @@ const Home: NextPage = () => {
   const slugMutation = trpc.useMutation(['slug.create'], {
     onSuccess: (data) => {
       setUrlInput('');
-      setAlert({ type: 'success', message: `${getBaseUrl()}/${data.slug}` });
+      setAlert({ type: 'success', message: `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/${data.slug}` });
     },
     onError: () => {
       setAlert({ type: 'error', message: 'there was an error processing your request, please try again!' });
