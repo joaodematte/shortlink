@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Alert from '../components/Alert';
 import Button from '../components/Button';
+import ExternalLinkIcon from '../components/ExternalLinkIcon';
 import trpc from '../utils/trpc';
 
 type Form = {
@@ -41,7 +42,7 @@ const Home: NextPage = () => {
       <Head>
         <title>shortlink | shortify URLs for free</title>
       </Head>
-      <div className="p-4 h-screen w-full flex justify-center items-center">
+      <div className="relative p-4 h-screen w-full flex justify-center items-center">
         <div className="w-full max-w-xl flex flex-col gap-2">
           <div className="block text-center">
             <h1 className="font-bold text-3xl">shortlink</h1>
@@ -72,6 +73,18 @@ const Home: NextPage = () => {
           </form>
           {alert !== null && <Alert type={alert.type} message={alert.message} />}
         </div>
+
+        <footer className="fixed bottom-4 right-4 flex items-center gap-1">
+          <a
+            href="https://github.com/joaodematte/shortlink"
+            target="_blank"
+            rel="noreferrer"
+            className="decoration-2 underline-offset-2 hover:underline hover:text-[#4433ff]"
+          >
+            contribute on GitHub
+          </a>
+          <ExternalLinkIcon className="h-5 w-5" />
+        </footer>
       </div>
     </>
   );
