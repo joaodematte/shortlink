@@ -18,7 +18,7 @@ const SpinnerIcon = () => (
 const Button = ({ children, loading, ...props }: TProps) => (
   <button
     type="submit"
-    className="relative w-full md:w-fit flex gap-2.5 justify-center items-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-[#4433ff] hover:bg-[#3829d9] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#4433ff] disabled:opacity-75 disabled:hover:bg-[#4433ff]"
+    className="relative w-full md:w-fit flex gap-2.5 justify-center items-center py-2 px-4 border-2 border-transparent text-sm font-medium rounded-md text-white bg-[#4433ff] hover:bg-[#3829d9] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#4433ff] disabled:opacity-75 disabled:hover:bg-[#4433ff]"
     {...props}
   >
     {loading && <SpinnerIcon />}
