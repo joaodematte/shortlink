@@ -51,13 +51,13 @@ const Home: NextPage = () => {
             </p>
           </div>
           <form
-            className="mt-2 flex flex-col md:flex-row items-center gap-2"
+            className="mt-3 flex flex-col md:flex-row items-center gap-2"
             autoComplete="off"
             onSubmit={handleSubmit(onSubmit)}
           >
             <input
               className={clsx(
-                'p-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#4433ff] mt-1 block w-full text-sm border border-gray-300 rounded-md',
+                'p-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#4433ff] block w-full text-sm border-2 border-gray-300 rounded-md',
                 errors.url && 'ring-2 ring-offset-2 ring-red-600',
               )}
               id="url"
