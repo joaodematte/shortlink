@@ -31,7 +31,7 @@ export async function middleware(req: NextRequest) {
 
     const data = await slugFetch.json();
 
-    if (data?.url) return NextResponse.redirect(data.url);
+    if (data?.url) return NextResponse.redirect(new URL(data.url));
   }
 
   return NextResponse.next();
